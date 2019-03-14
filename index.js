@@ -7,9 +7,7 @@ const check = password => {
     return new Promise(resolve => {
         const hash = sha1(password).toUpperCase();
         const partial = hash.substring(0, 5);
-        // console.log('password:', password);
         console.log('sha1:', hash);
-        // console.log('partial:', partial);
 
         let url = `https://api.pwnedpasswords.com/range/${partial}`;
         console.log('url:', url);
@@ -37,10 +35,6 @@ const check = password => {
     });
 };
 
-/*
-
-*/
-
 const rl = readline.createInterface({
     input: process.stdin,
     output: process.stdout
@@ -51,8 +45,3 @@ rl.question('Enter a password to check: ', answer => {
     check(answer)
     .then(() => rl.close());
 });
-
-// check('Password1')
-// .then(() => {
-//     console.log('Done!');
-// });
