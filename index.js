@@ -7,22 +7,24 @@ const check = password => {
     return new Promise(resolve => {
         const hash = sha1(password).toUpperCase();
         const partial = hash.substring(0, 5);
-        console.log('password:', password);
+        // console.log('password:', password);
         console.log('sha1:', hash);
-        console.log('partial:', partial);
+        // console.log('partial:', partial);
 
-        fetch(`https://api.pwnedpasswords.com/range/${partial}`)
+        let url = `https://api.pwnedpasswords.com/range/${partial}`;
+        console.log('url:', url);
+
+        fetch(url)
         .then(response => response.text())
         .then(text => text.split('\r\n'))
         .then(lines => {
             let found = false;
+            console.log();
             lines.forEach(line => {
                 let [end, count] = line.split(':');
                 let complete = partial + end;
                 if (complete === hash) {
-                    console.log(line);
-                    console.log('end:', end);
-                    console.log('count:', count);
+                    console.log('line:', line);
                     found = true;
                     console.log(`Found ${count} pwnings!`);
                 }
